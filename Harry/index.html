@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="midnightblue" />
+    <title>Arena Clash | Tournament Management</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section class="auth-screen" id="authScreen">
+      <div class="auth-art">
+        <div class="brand">
+          <span class="brand-symbol">AC</span>
+          <span>ARENA <b>CLASH</b></span>
+        </div>
+
+        <div class="auth-message">
+          <span class="kicker">ESPORTS TOURNAMENT PLATFORM</span>
+          <h1>ENTER THE<br /><em>ARENA.</em></h1>
+          <p>Find your competition. Build your team. Make your mark.</p>
+        </div>
+
+        <div class="auth-bottom">COMPETE WITH PURPOSE · PLAY WITH RESPECT</div>
+      </div>
+
+      <div class="auth-side">
+        <div class="auth-card">
+          <div class="brand mobile-brand">
+            <span class="brand-symbol">AC</span>
+            <span>ARENA <b>CLASH</b></span>
+          </div>
+
+          <span class="kicker">WELCOME TO ARENA CLASH</span>
+          <h2 id="authHeading">Sign in to continue</h2>
+          <p class="muted" id="authSubheading">
+            Access your competitive command center.
+          </p>
+
+          <div class="auth-switch">
+            <button class="switch-btn active" data-auth="login" type="button">
+              Sign In
+            </button>
+            <button class="switch-btn" data-auth="register" type="button">
+              Create Account
+            </button>
+          </div>
+
+          <form id="loginForm">
+            <label for="loginEmail">Email address</label>
+            <input
+              id="loginEmail"
+              type="email"
+              placeholder="you@example.com"
+              required
+            />
+
+            <label for="loginPassword">Password</label>
+            <input
+              id="loginPassword"
+              type="password"
+              placeholder="Enter your password"
+              required
+            />
+
+            <button class="primary-btn full" type="submit">
+              Enter Arena →
+            </button>
+            <p class="form-message" id="loginMessage"></p>
+          </form>
+
+          <form id="registerForm" class="hidden">
+            <label for="registerName">Full name</label>
+            <input
+              id="registerName"
+              type="text"
+              placeholder="Your full name"
+              required
+            />
+
+            <label for="registerEmail">Email address</label>
+            <input
+              id="registerEmail"
+              type="email"
+              placeholder="you@example.com"
+              required
+            />
+
+            <label for="registerPassword">Password</label>
+            <input
+              id="registerPassword"
+              type="password"
+              placeholder="At least 6 characters"
+              minlength="6"
+              required
+            />
+
+            <label for="registerRole">Account role</label>
+            <select id="registerRole">
+              <option value="Player">Player</option>
+              <option value="Administrator">Administrator</option>
+            </select>
+
+            <label class="check-row" id="captainOption">
+              <input id="registerCaptain" type="checkbox" />
+              Register as a Team Captain
+            </label>
+
+            <label for="registerTeam">Team name <small>Optional</small></label>
+            <input id="registerTeam" type="text" placeholder="Your team name" />
+
+            <button class="primary-btn full" type="submit">
+              Create Account →
+            </button>
+            <p class="form-message" id="registerMessage"></p>
+          </form>
+        </div>
+
+        <div class="auth-footnote">
+          ARENA CLASH · ESPORTS TOURNAMENT MANAGEMENT
+        </div>
+      </div>
+    </section>
+
+    <div class="app hidden" id="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand sidebar-brand">
+          <span class="brand-symbol">AC</span>
+          <span>ARENA <b>CLASH</b></span>
+        </div>
+
+        <div class="nav-caption">MAIN MENU</div>
+
+        <nav id="navigation">
+          <button class="nav-link active" data-page="dashboard">
+            <span>⌂</span> Dashboard
+          </button>
+          <button class="nav-link" data-page="games">
+            <span>◈</span> Explore Games
+          </button>
+          <button class="nav-link" data-page="tournaments">
+            <span>♜</span> Tournaments <small id="navTournamentCount">0</small>
+          </button>
+
+          <div class="nav-caption">COMPETITION</div>
+
+          <button class="nav-link" data-page="bracket">
+            <span>⌘</span> Tournament Bracket
+          </button>
+          <button class="nav-link" data-page="lobby">
+            <span>◉</span> Match Lobby
+          </button>
+          <button class="nav-link" data-page="results">
+            <span>▤</span> Match Results
+          </button>
+
+          <div class="nav-caption">COMMUNITY</div>
+
+          <button class="nav-link" data-page="teams">
+            <span>♟</span> Teams & Players
+          </button>
+          <button class="nav-link" data-page="leaderboard">
+            <span>♛</span> Leaderboard
+          </button>
+
+          <div class="nav-caption">MY ACCOUNT</div>
+
+          <button class="nav-link" data-page="profile">
+            <span>◌</span> Player Profile
+          </button>
+
+          <div id="adminNav" class="hidden">
+            <div class="nav-caption">ADMINISTRATION</div>
+            <button class="nav-link" data-page="admin">
+              <span>▦</span> Admin Dashboard
+            </button>
+            <button class="nav-link" data-page="create">
+              <span>＋</span> Create Tournament
+            </button>
+            <button class="nav-link" data-page="management">
+              <span>☷</span> Tournament Management
+            </button>
+          </div>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="help-box">
+            <span>?</span>
+            <div>
+              <b>Arena Clash</b>
+              <small>Tournament Center</small>
+            </div>
+          </div>
+
+          <button class="nav-link logout" id="logoutBtn">
+            <span>↪</span> Sign Out
+          </button>
+        </div>
+      </aside>
+
+      <div class="main">
+        <header class="topbar">
+          <button class="menu-toggle" id="menuToggle" type="button">☰</button>
+
+          <div class="breadcrumb">
+            <span>ARENA CLASH</span>
+            <b>/</b>
+            <strong id="currentPageName">Dashboard</strong>
+          </div>
+
+          <div class="top-actions">
+            <label class="top-search">
+              <span>⌕</span>
+              <input
+                id="globalSearch"
+                type="search"
+                placeholder="Search tournaments..."
+              />
+            </label>
+
+            <div class="user-chip">
+              <span class="avatar" id="topAvatar">A</span>
+              <div>
+                <b id="topName">Player</b>
+                <small id="topRole">Player</small>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="content">
+          <section class="page active" id="page-dashboard">
+            <div class="page-head split">
+              <div>
+                <span class="kicker">YOUR COMPETITIVE OVERVIEW</span>
+                <h1>Welcome back, <span id="welcomeName">Player</span></h1>
+                <p>Here's what's happening in Arena Clash today.</p>
+              </div>
+              <button class="primary-btn" data-go="tournaments">
+                Explore Tournaments →
+              </button>
+            </div>
+
+            <div class="feature-banner">
+              <div class="feature-copy">
+                <span class="kicker">FEATURED TOURNAMENT</span>
+                <h2>ARENA CHAMPIONSHIP<br /><em>2026</em></h2>
+                <p>Step into the spotlight. Your next victory starts here.</p>
+
+                <div class="feature-meta">
+                  <span>▣ November 30, 2026</span>
+                  <span>◷ 8:00 PM</span>
+                </div>
+
+                <button class="primary-btn" data-go="tournaments">
+                  Explore Event →
+                </button>
+              </div>
+
+              <div class="hero-image">
+                <img
+                  src="images/arena-banner.jpg"
+                  alt="Arena Clash esports tournament banner"
+                />
+              </div>
+            </div>
+
+            <div class="section-head">
+              <div>
+                <span class="kicker">LIVE OVERVIEW</span>
+                <h2>Your arena at a glance</h2>
+              </div>
+              <span class="live-label">COMPETITION OVERVIEW</span>
+            </div>
+
+            <div class="stats-grid">
+              <article class="stat-card">
+                <div class="stat-label">Active Tournaments <span>♜</span></div>
+                <strong id="statTournaments">0</strong>
+                <small>Open for registration</small>
+              </article>
+
+              <article class="stat-card">
+                <div class="stat-label">Registered Players <span>♟</span></div>
+                <strong id="statPlayers">0</strong>
+                <small>Registered accounts</small>
+              </article>
+
+              <article class="stat-card">
+                <div class="stat-label">Completed Matches <span>⚔</span></div>
+                <strong id="statCompleted">0</strong>
+                <small>Approved match results</small>
+              </article>
+
+              <article class="stat-card">
+                <div class="stat-label">Pending Results <span>◷</span></div>
+                <strong id="statPending">0</strong>
+                <small>Awaiting verification</small>
+              </article>
+            </div>
+
+            <div class="dashboard-columns">
+              <section class="panel">
+                <div class="panel-head">
+                  <div>
+                    <span class="kicker">DON'T MISS OUT</span>
+                    <h3>Upcoming Tournaments</h3>
+                  </div>
+                  <button class="text-link" data-go="tournaments">
+                    View All →
+                  </button>
+                </div>
+                <div id="dashboardTournamentList" class="compact-list"></div>
+              </section>
+
+              <section class="panel">
+                <div class="panel-head">
+                  <div>
+                    <span class="kicker">YOUR ACTIVITY</span>
+                    <h3>Recent Activity</h3>
+                  </div>
+                </div>
+                <div id="activityFeed" class="activity-list"></div>
+              </section>
+            </div>
+
+            <div class="section-head">
+              <div>
+                <span class="kicker">QUICK ACCESS</span>
+                <h2>Choose your battleground</h2>
+              </div>
+              <button class="text-link" data-go="games">All Games →</button>
+            </div>
+
+            <div class="mini-game-grid" id="dashboardGames"></div>
+          </section>
+
+          <section class="page" id="page-games">
+            <div class="page-head">
+              <span class="kicker">PICK YOUR BATTLEGROUND</span>
+              <h1>Explore Games</h1>
+              <p>Choose a game to discover its available tournaments.</p>
+            </div>
+
+            <div class="game-grid" id="gameGrid"></div>
+
+            <section class="panel hidden" id="selectedGamePanel">
+              <div class="panel-head">
+                <h3 id="selectedGameTitle">Game Tournaments</h3>
+                <button class="text-link" id="clearGameFilter">
+                  Clear Filter ×
+                </button>
+              </div>
+              <div class="tournament-grid" id="selectedGameTournaments"></div>
+            </section>
+          </section>
+
+          <section class="page" id="page-tournaments">
+            <div class="page-head split">
+              <div>
+                <span class="kicker">FIND YOUR NEXT CHALLENGE</span>
+                <h1>Tournament Discovery</h1>
+                <p>Find and join the best esports tournaments.</p>
+              </div>
+              <div class="total-box">
+                <b id="tournamentTotal">0</b>
+                <small>TOURNAMENTS</small>
+              </div>
+            </div>
+
+            <div class="filter-row">
+              <input
+                id="tournamentSearch"
+                type="search"
+                placeholder="⌕ Search tournaments..."
+              />
+
+              <select id="gameFilter">
+                <option value="all">All Games</option>
+              </select>
+
+              <select id="statusFilter">
+                <option value="all">All Status</option>
+                <option value="Open">Open</option>
+                <option value="Closed">Closed</option>
+              </select>
+            </div>
+
+            <div class="tournament-grid" id="tournamentGrid"></div>
+          </section>
+
+          <section class="page" id="page-details">
+            <button class="back-link" data-go="tournaments">
+              ← Back to tournaments
+            </button>
+
+            <div class="page-head">
+              <span class="kicker">COMPETITION OVERVIEW</span>
+              <h1 id="detailTitle">Tournament Details</h1>
+              <p>Review the competition information before joining.</p>
+            </div>
+
+            <div id="detailContent"></div>
+          </section>
+
+          <section class="page" id="page-bracket">
+            <div class="page-head">
+              <span class="kicker">THE ROAD TO VICTORY</span>
+              <h1>Tournament Bracket</h1>
+              <p>
+                Follow every matchup and see which teams advance to the
+                championship.
+              </p>
+            </div>
+
+            <div class="bracket-toolbar">
+              <div>
+                <label for="bracketTournamentSelect">SELECT TOURNAMENT</label>
+                <select
+                  id="bracketTournamentSelect"
+                  class="select-control"
+                ></select>
+              </div>
+              <span class="bracket-format">SINGLE ELIMINATION</span>
+            </div>
+
+            <div class="bracket-scroll">
+              <div class="bracket-board">
+                <div class="bracket-headings">
+                  <div class="bracket-heading">
+                    <strong>PARTICIPATING TEAMS</strong>
+                    <span>8 TEAMS</span>
+                  </div>
+                  <div class="bracket-heading">
+                    <strong>QUARTERFINALS</strong>
+                    <span>ROUND 01</span>
+                  </div>
+                  <div class="bracket-heading">
+                    <strong>SEMIFINALS</strong>
+                    <span>ROUND 02</span>
+                  </div>
+                  <div class="bracket-heading">
+                    <strong>GRAND FINAL</strong>
+                    <span>CHAMPIONSHIP</span>
+                  </div>
+                </div>
+
+                <div class="bracket-lanes">
+                  <svg
+                    class="bracket-connectors"
+                    viewBox="0 0 1080 536"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                  >
+                    <g class="connector-blue">
+                      <path d="M187 33.5 H229 V67 H271" />
+                      <path d="M187 100.5 H229 V67" />
+                      <path d="M187 167.5 H229 V201 H271" />
+                      <path d="M187 234.5 H229 V201" />
+                      <path d="M187 301.5 H229 V335 H271" />
+                      <path d="M187 368.5 H229 V335" />
+                      <path d="M187 435.5 H229 V469 H271" />
+                      <path d="M187 502.5 H229 V469" />
+                    </g>
+
+                    <g class="connector-green">
+                      <path d="M457 67 H499 V134 H541" />
+                      <path d="M457 201 H499 V134" />
+                      <path d="M457 335 H499 V402 H541" />
+                      <path d="M457 469 H499 V402" />
+                      <path d="M729 134 H770 V268 H811" />
+                      <path d="M729 402 H770 V268" />
+                    </g>
+                  </svg>
+
+                  <div
+                    class="bracket-column team-column"
+                    id="bracketTeamColumn"
+                  ></div>
+                  <div
+                    class="bracket-column quarterfinal-column"
+                    id="quarterfinalColumn"
+                  ></div>
+                  <div
+                    class="bracket-column semifinal-column"
+                    id="semifinalColumn"
+                  ></div>
+                  <div
+                    class="bracket-column final-column"
+                    id="finalColumn"
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="champion-strip" id="championCard">
+              <div class="champion-image">
+                <img
+                  src="images/champion-trophy.png"
+                  alt="Tournament champion trophy"
+                />
+              </div>
+              <div>
+                <span class="kicker">TOURNAMENT CHAMPION</span>
+                <h2>Champion not yet determined</h2>
+                <p>
+                  The champion will appear after the final match is approved.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="page" id="page-lobby">
+            <div class="page-head">
+              <span class="kicker">MATCH CENTER</span>
+              <h1>Match Lobby</h1>
+              <p>Check match schedules and matchup information.</p>
+            </div>
+
+            <div class="match-feature">
+              <div class="match-feature-head">
+                <span class="demo-tag">UPCOMING MATCH</span>
+                <span>MATCH 001</span>
+              </div>
+
+              <div class="versus-row">
+                <div>
+                  <img
+                    class="lobby-team-logo"
+                    src="images/team-alpha.png"
+                    alt="Team Alpha logo"
+                  />
+                  <h3>TEAM ALPHA</h3>
+                  <small>12 W · 4 L</small>
+                </div>
+
+                <strong>VS</strong>
+
+                <div>
+                  <img
+                    class="lobby-team-logo"
+                    src="images/team-bravo.png"
+                    alt="Team Bravo logo"
+                  />
+                  <h3>TEAM BRAVO</h3>
+                  <small>10 W · 6 L</small>
+                </div>
+              </div>
+
+              <div class="match-meta">
+                <span>◷ November 25, 2026 · 7:00 PM</span>
+                <span>◈ Mobile Legends</span>
+                <span class="status open">SCHEDULED</span>
+              </div>
+            </div>
+
+            <section class="panel">
+              <div class="panel-head">
+                <h3>Upcoming Fixtures</h3>
+              </div>
+
+              <div class="simple-row">
+                <b>Team Alpha vs Team Bravo</b>
+                <span>November 25 · 7:00 PM</span>
+                <span class="status open">Scheduled</span>
+              </div>
+
+              <div class="simple-row">
+                <b>Team Nova vs Team Phoenix</b>
+                <span>November 27 · 6:00 PM</span>
+                <span class="status pending">Upcoming</span>
+              </div>
+            </section>
+          </section>
+
+          <section class="page" id="page-results">
+            <div class="page-head split">
+              <div>
+                <span class="kicker">OFFICIAL MATCH RECORDS</span>
+                <h1>Match Results</h1>
+                <p>
+                  Review submitted scores and verified competition outcomes.
+                </p>
+              </div>
+              <div class="total-box">
+                <b id="resultTotal">0</b>
+                <small>RESULTS</small>
+              </div>
+            </div>
+
+            <div class="stats-grid three-stats">
+              <article class="stat-card">
+                <div class="stat-label">Approved</div>
+                <strong id="approvedCount">0</strong>
+              </article>
+
+              <article class="stat-card">
+                <div class="stat-label">Pending Review</div>
+                <strong id="pendingCount">0</strong>
+              </article>
+
+              <article class="stat-card">
+                <div class="stat-label">Rejected</div>
+                <strong id="rejectedCount">0</strong>
+              </article>
+            </div>
+
+            <section class="panel">
+              <div class="panel-head">
+                <h3>All Match Results</h3>
+
+                <select id="resultFilter" class="select-control">
+                  <option value="all">All Results</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              </div>
+
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Tournament</th>
+                      <th>Match</th>
+                      <th>Teams</th>
+                      <th>Score</th>
+                      <th>Winner</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="resultsTable"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="panel hidden" id="submitResultPanel">
+              <div class="panel-head">
+                <h3>Submit a Match Result</h3>
+                <span class="status pending">Requires Approval</span>
+              </div>
+
+              <form id="resultForm" class="form-grid">
+                <label>
+                  Tournament
+                  <select id="resultTournament" required></select>
+                </label>
+
+                <label>
+                  Match Round
+                  <select id="resultMatchRound" required>
+                    <option value="qf1">Quarterfinal 1</option>
+                    <option value="qf2">Quarterfinal 2</option>
+                    <option value="qf3">Quarterfinal 3</option>
+                    <option value="qf4">Quarterfinal 4</option>
+                    <option value="sf1">Semifinal 1</option>
+                    <option value="sf2">Semifinal 2</option>
+                    <option value="final">Grand Final</option>
+                  </select>
+                </label>
+
+                <label>
+                  Team A
+                  <input id="resultTeamA" readonly />
+                </label>
+
+                <label>
+                  Team B
+                  <input id="resultTeamB" readonly />
+                </label>
+
+                <label>
+                  Team A Score
+                  <input id="resultScoreA" type="number" min="0" required />
+                </label>
+
+                <label>
+                  Team B Score
+                  <input id="resultScoreB" type="number" min="0" required />
+                </label>
+
+                <p class="form-message wide" id="resultMatchInfo">
+                  Select a match to view its participating teams.
+                </p>
+
+                <button class="primary-btn" type="submit">
+                  Submit Result →
+                </button>
+              </form>
+            </section>
+          </section>
+
+          <section class="page" id="page-teams">
+            <div class="page-head">
+              <span class="kicker">THE PEOPLE BEHIND THE PLAY</span>
+              <h1>Teams & Players</h1>
+              <p>
+                View team rosters, individual player roles and overall team
+                records.
+              </p>
+            </div>
+
+            <div class="team-grid" id="teamGrid"></div>
+          </section>
+
+          <section class="page" id="page-leaderboard">
+            <div class="page-head">
+              <span class="kicker">THE TOP OF THE ARENA</span>
+              <h1>Leaderboard</h1>
+              <p>Team standings based on approved match records.</p>
+            </div>
+
+            <div class="leaderboard-banner">
+              <div>
+                <span class="kicker">CHASE THE TOP SPOT</span>
+                <h2>Every match<br />moves you up.</h2>
+                <p>Win. Earn points. Build your legacy.</p>
+              </div>
+              <img
+                src="images/champion-trophy.png"
+                alt="Champion trophy"
+                class="leaderboard-trophy"
+              />
+            </div>
+
+            <section class="panel">
+              <div class="panel-head">
+                <h3>Team Rankings</h3>
+              </div>
+
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Rank</th>
+                      <th>Team</th>
+                      <th>Wins</th>
+                      <th>Losses</th>
+                      <th>Points</th>
+                    </tr>
+                  </thead>
+                  <tbody id="leaderboardTable"></tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+
+          <section class="page" id="page-profile">
+            <div class="page-head">
+              <span class="kicker">YOUR PLAYER IDENTITY</span>
+              <h1>Player Profile</h1>
+              <p>Your account details and competitive overview.</p>
+            </div>
+
+            <div class="profile-banner">
+              <div class="profile-avatar" id="profileAvatar">P</div>
+              <div>
+                <span class="kicker">ARENA MEMBER</span>
+                <h2 id="profileName">Player</h2>
+                <p id="profileRole">Player</p>
+              </div>
+            </div>
+
+            <div class="dashboard-columns">
+              <section class="panel">
+                <div class="panel-head">
+                  <h3>Account Information</h3>
+                </div>
+
+                <div class="info-row">
+                  <span>Email</span><b id="profileEmail">—</b>
+                </div>
+                <div class="info-row">
+                  <span>Team</span><b id="profileTeam">Not assigned</b>
+                </div>
+                <div class="info-row">
+                  <span>Account type</span><b id="profileType">Player</b>
+                </div>
+                <div class="info-row">
+                  <span>Member since</span><b id="profileJoined">—</b>
+                </div>
+              </section>
+
+              <section class="panel">
+                <div class="panel-head">
+                  <h3>Competitive Record</h3>
+                </div>
+
+                <div class="profile-stats">
+                  <div><b id="profileWins">0</b><small>WINS</small></div>
+                  <div><b id="profileLosses">0</b><small>LOSSES</small></div>
+                  <div><b id="profileRate">0%</b><small>WIN RATE</small></div>
+                </div>
+
+                <p class="muted small">
+                  Statistics are based on approved results matching your team
+                  name.
+                </p>
+              </section>
+            </div>
+          </section>
+
+          <section class="page" id="page-admin">
+            <div class="page-head split">
+              <div>
+                <span class="kicker">CONTROL ROOM</span>
+                <h1>Administrator Dashboard</h1>
+                <p>Manage tournaments and review submitted match results.</p>
+              </div>
+              <button class="primary-btn" data-go="create">
+                ＋ Create Tournament
+              </button>
+            </div>
+
+            <div class="stats-grid">
+              <article class="stat-card">
+                <div class="stat-label">Total Tournaments</div>
+                <strong id="adminTournaments">0</strong>
+              </article>
+
+              <article class="stat-card">
+                <div class="stat-label">Registered Players</div>
+                <strong id="adminPlayers">0</strong>
+              </article>
+
+              <article class="stat-card">
+                <div class="stat-label">Approved Results</div>
+                <strong id="adminApproved">0</strong>
+              </article>
+
+              <article class="stat-card">
+                <div class="stat-label">Pending Review</div>
+                <strong id="adminPending">0</strong>
+              </article>
+            </div>
+
+            <section class="panel">
+              <div class="panel-head">
+                <h3>Tournament Management</h3>
+                <button class="text-link" data-go="management">
+                  View All →
+                </button>
+              </div>
+
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Tournament</th>
+                      <th>Game</th>
+                      <th>Date</th>
+                      <th>Participants</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminTournamentTable"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-head">
+                <h3>Pending Result Verification</h3>
+                <button class="text-link" data-go="results">
+                  View Results →
+                </button>
+              </div>
+              <div id="pendingVerificationList"></div>
+            </section>
+          </section>
+
+          <section class="page" id="page-create">
+            <div class="page-head">
+              <span class="kicker">BUILD THE NEXT COMPETITION</span>
+              <h1>Create Tournament</h1>
+              <p>Set up a new competition for players to discover and join.</p>
+            </div>
+
+            <section class="panel form-panel">
+              <div class="panel-head">
+                <h3>Competition Information</h3>
+              </div>
+
+              <form id="createTournamentForm" class="form-grid">
+                <label class="wide">
+                  Tournament Name
+                  <input
+                    id="newName"
+                    required
+                    placeholder="Arena Championship"
+                  />
+                </label>
+
+                <label>
+                  Game
+                  <select id="newGame" required>
+                    <option value="">Select a game</option>
+                    <option>Mobile Legends</option>
+                    <option>Valorant</option>
+                    <option>Dota 2</option>
+                    <option>Call of Duty</option>
+                    <option>League of Legends</option>
+                    <option>Other</option>
+                  </select>
+                </label>
+
+                <label>
+                  Schedule Date
+                  <input id="newDate" type="date" required />
+                </label>
+
+                <label>
+                  Maximum Teams
+                  <input
+                    id="newSlots"
+                    type="number"
+                    min="2"
+                    max="256"
+                    value="32"
+                    required
+                  />
+                </label>
+
+                <label>
+                  Registration Status
+                  <select id="newStatus">
+                    <option>Open</option>
+                    <option>Closed</option>
+                  </select>
+                </label>
+
+                <label class="wide">
+                  Description
+                  <textarea
+                    id="newDescription"
+                    rows="4"
+                    placeholder="Describe the tournament..."
+                  ></textarea>
+                </label>
+
+                <button class="primary-btn" type="submit">
+                  Publish Tournament →
+                </button>
+                <p class="form-message wide" id="createMessage"></p>
+              </form>
+            </section>
+          </section>
+
+          <section class="page" id="page-management">
+            <div class="page-head">
+              <span class="kicker">EVENT OPERATIONS</span>
+              <h1>Tournament Management</h1>
+              <p>
+                Monitor registration capacity and update competition
+                availability.
+              </p>
+            </div>
+
+            <section class="panel">
+              <div class="panel-head">
+                <h3>All Competition Records</h3>
+              </div>
+
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Tournament</th>
+                      <th>Game</th>
+                      <th>Schedule</th>
+                      <th>Teams</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="managementTable"></tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+        </main>
+
+        <footer class="footer">
+          <span>© 2026 ARENA CLASH</span>
+          <span>COMPETE WITH PURPOSE · PLAY WITH RESPECT</span>
+        </footer>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
